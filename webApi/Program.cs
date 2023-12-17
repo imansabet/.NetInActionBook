@@ -20,6 +20,7 @@ if (app.Environment.IsDevelopment())
 {
     //Http logging middleware logs each request to your application in the log output
     app.UseHttpLogging();
+    app.UseStaticFiles();
     app.UseWelcomePage();
 }
 
