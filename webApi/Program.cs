@@ -20,6 +20,7 @@ if (app.Environment.IsDevelopment())
 {
     //Http logging middleware logs each request to your application in the log output
     app.UseHttpLogging();
+    app.UseWelcomePage();
 }
 
 //Defines an Endpoint for application , return "Hello world" when the path "/" is callled  -- path: reminder of the request URL after domain remove
