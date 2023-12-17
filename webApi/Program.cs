@@ -16,16 +16,23 @@ builder.Logging.AddFilter(
 var app = builder.Build();
 
 //add middleware conditionally ,depending on runtime environment
-if (app.Environment.IsDevelopment()) 
+if (!app.Environment.IsDevelopment()) 
 {
+    //this exceptionHandler middleware wont leak sensitive details when running in production
+    app.UseExceptionHandler("/error");
     //Http logging middleware logs each request to your application in the log output
     app.UseHttpLogging();
-    app.UseStaticFiles();
-    app.UseWelcomePage();
 }
 
+//additional middleware configuration
+app.MapGet("/error", () => "Sorry , an error occured .");
+
+app.UseWelcomePage("/");
+
+app.UseStaticFiles();
+
 //Defines an Endpoint for application , return "Hello world" when the path "/" is callled  -- path: reminder of the request URL after domain remove
-app.MapGet("/", () => "Hello World!");
+//app.MapGet("/", () => "Hello World!");
 
 //Creates a new endpoint that returns the C# object serialized as JSON
 app.MapGet("/person", () => new Person("Iman", "Sabet"));
